@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 禁用动态方法访问   例: user!add.action   不推荐所以fals-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <!-- 配置开发模式    会把错误显示在页面 -->
+    <constant name="struts.devMode" value="true" />
+    <!-- 把主题配置为simple -->
+    <constant name="struts.ui.theme" value="simple" />
+   <!-- 配置匿名为action  user_add.action -->
+	<constant name="struts.action.extension" value="action" />
+	
+	<!-- 把其它struts配置文件包含进去 -->
+	<include file="my/it/test/conf/test-struts.xml"></include>
+	<include file="my/it/nsfw/user/conf/user-struts.xml"></include>
+	<include file="my/it/nsfw/role/conf/role-struts.xml"></include>
+	<include file="my/it/nsfw/info/conf/info-struts.xml"></include>
+	<include file="my/it/home/conf/home-struts.xml"></include>
+	<include file="my/it/nsfw/home/conf/home-struts.xml"></include>
+	<include file="my/it/login/conf/login-struts.xml"></include>
+	
+	<!-- 配置全局结果异常 -->
+	<package name="base-default" extends="struts-default">
+		<!-- 返回结果类型 -->
+		<result-types>
+			<result-type name="error" class="my.it.core.action.SysResultAction"></result-type>
+		</result-types>
+		<!-- 全局返回结果 -->
+		<global-results>
+			<result name="error" type="error">/WEB-INF/jsp/error.jsp</result>
+			<result name="sysError">/WEB-INF/jsp/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/error.jsp</result>
+		</global-results>
+		<!-- 全局异常映射 -->
+		<global-exception-mappings>
+			<exception-mapping result="sysError" exception="my.it.core.exception.SysException"></exception-mapping>
+			<exception-mapping result="input" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+	</package>
+	
+</struts>
